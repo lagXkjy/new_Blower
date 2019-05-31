@@ -1,0 +1,126 @@
+page{
+    background: #f4f7f9;
+}
+.list{
+    height: 90rpx;
+    box-sizing: border-box;
+    font-size: 26rpx;
+    line-height: 26rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 0 30rpx;
+    border-bottom: 1px solid #ebebeb;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.list-title{
+    height: 100%;
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #a0a0a0;
+}
+.list-content{
+    height: 100%;
+    width: 78%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 0;
+    right: 0;
+}
+.absolute{ /* 会变动的元素脱离文档流，不会导致大范围回流 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.select-box{ 
+    display: flex;
+}
+.select-list{
+    height: 100%;
+    margin-right: 20rpx;
+    display: flex;
+    align-items: center;
+}
+.select-image{
+    width: 26rpx;
+    margin-right: 16rpx;
+}
+.list-input{
+    width: 100%;
+    height: 100%;
+}
+.list-picker{
+    width: 100%;
+}
+.picker-view{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.picker-image{
+    width: 16rpx;
+}
+.add-image{
+    width: 70rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+}
+.other-input{
+    height: 100%;
+    width: 70%;
+}
+.other-picker{
+    width: 30%;
+}
+.title{
+    background: #e8e8e8;
+}
+.image-box{
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.delete-image{
+    width: 40rpx;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+.association{
+  position: absolute;
+  top: 90rpx;
+  left: 0;
+  width: 100%;
+  /* border: 1rpx solid #000; */
+  box-sizing: border-box;
+  z-index: 10;
+  background: #fff;
+}
+.association>view{
+  width: 100%;
+  padding: 15rpx 30rpx;
+  /* border: 1rpx solid #ccc; */
+  border-bottom: 1rpx solid #ccc;
+  border-left: 1rpx solid #ccc;
+  border-right: 1rpx solid #ccc;
+  /* border-top: 1rpx solid #fff; */
+  box-sizing: border-box;
+}
+.association>view:nth-child(1){
+  border-top: 1rpx solid #ccc;
+}
