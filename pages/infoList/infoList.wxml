@@ -51,6 +51,9 @@
                 <view bindtap='revise' data-zfId='{{item.zfId}}' class="list-btn margin-l-10">
                     修改
                 </view>
+                <view bindtap='download' data-zfId='{{item.zfId}}' class="list-btn margin-l-10">
+                    下载
+                </view>
             </view>
         </view>
     </block>

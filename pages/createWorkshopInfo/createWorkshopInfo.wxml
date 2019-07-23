@@ -160,7 +160,7 @@
         </view>
     </view>
     <view class="title list">
-        <text>用气量（m3/min）</text>
+        <text>用气情况</text>
         <text bindtap='changeMust' data-keyName='isGas' class="theme-color">
             {{isGas ? '收起': '展开'}}
         </text>
@@ -170,7 +170,7 @@
             <view class="list-title">最大</view>
             <view class="list-content">
                 <view class="absolute">
-                    <input name='maxyql' value='{{maxyql}}' class='list-input' type="text" placeholder='请输入最大用气量' placeholder-class="black-color" />
+                    <input name='maxyql' value='{{maxyql}}' class='list-input' type="text" placeholder='请输入最大用气量（m3/min）' placeholder-class="black-color" />
                 </view>
             </view>
         </view>
@@ -178,7 +178,7 @@
             <view class="list-title">最小</view>
             <view class="list-content">
                 <view class="absolute">
-                    <input name='minyql' value='{{minyql}}' class='list-input' type="text" placeholder='请输入最小用气量' placeholder-class="black-color" />
+                    <input name='minyql' value='{{minyql}}' class='list-input' type="text" placeholder='请输入最小用气量（m3/min）' placeholder-class="black-color" />
                 </view>
             </view>
         </view>
@@ -186,7 +186,7 @@
             <view class="list-title">平均</view>
             <view class="list-content">
                 <view class="absolute">
-                    <input name='avgyql' value='{{avgyql}}' class='list-input' type="text" placeholder='请输入平均用气量' placeholder-class="black-color" />
+                    <input name='avgyql' value='{{avgyql}}' class='list-input' type="text" placeholder='请输入平均用气量（m3/min）' placeholder-class="black-color" />
                 </view>
             </view>
         </view>

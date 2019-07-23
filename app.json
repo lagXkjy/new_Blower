@@ -1,9 +1,10 @@
 {
   "pages": [
+    "pages/judge/judge",
     "pages/login/login",
+    "pages/createCompressorInfo/createCompressorInfo",
     "pages/infoList/infoList",
     "pages/compressorInfoList/compressorInfoList",
-    "pages/createCompressorInfo/createCompressorInfo",
     "pages/createWorkshopInfo/createWorkshopInfo"
   ],
   "window": {

@@ -70,7 +70,7 @@
         </block> -->
         <!-- <input name='Brand' value='{{Brand}}' class='list-input' type="text" placeholder='请输入品牌' placeholder-class="black-color" /> -->
         <view class='other-input'>
-            <input bindinput='inputBrand' value='{{Brand}}' type="text" class="list-input" placeholder='请输入品牌' placeholder-class="black-color" />
+            <input bindinput='inputBrand' name='Brand' value='{{Brand}}' focus="{{focus.Brand}}" type="text" class="list-input" placeholder='请输入品牌' placeholder-class="black-color" />
           </view>
           <view class='association'>
             <view wx:for='{{association}}' wx:key='{{index}}' bindtap='association' data-ation='{{item}}'>{{item}}</view>
@@ -92,10 +92,10 @@
     </view>
   </view>
   <view class="list">
-    <view class="list-title">价格(rmb)</view>
+    <view class="list-title">价格</view>
     <view class="list-content">
       <view class="absolute">
-        <input name='Price' value='{{Price}}' class='list-input' type="digit" placeholder='请输入价格（含税）' placeholder-class="black-color" />
+        <input name='Price' value='{{Price}}' class='list-input' type="digit" placeholder='请输入价格（万元 含税）' placeholder-class="black-color" />
       </view>
     </view>
   </view>
@@ -125,7 +125,7 @@
     <view class="list-title">电机功率</view>
     <view class="list-content">
       <view class="absolute">
-        <input name='kw' focus="{{focus.kw}}" value="{{kw}}" class='list-input' type="text" placeholder='请输入电机功率(kw)' placeholder-class="black-color" />
+        <input name='kw' focus="{{focus.kw}}" value="{{kw}}" class='list-input' type="text" placeholder='请输入电机功率' placeholder-class="black-color" />
         <block wx:for='{{power}}' wx:key='*this'>
           <view bindtap='power' data-index='{{index}}' class="select-list">
             <image hidden='{{index !== pow}}' mode="widthFix" src="/images/select.png" class="select-image" />
@@ -136,17 +136,22 @@
       </view>
     </view>
   </view>
-  <view class="list">
+  <view class="list piclist">
     <view class="list-title">拍照上传</view>
     <view class="list-content">
       <view class="absolute justify-end">
+      <view class='pic' wx:for='{{image}}' wx:key='{{index}}'>
+        <image bindtap='addImage' data-index='{{index}}' mode="aspectFit" src="{{item.img=='/images/addImage.png'?item.img:uploadUrl + item.img}}" class="add-image margin-r-20" />
+        <view>{{item.text}}</view>
+      </view>
+        <!-- 
         <image hidden='{{imageList.length >= imageMaxNum}}' bindtap='addImage' mode="aspectFit" src="/images/addImage.png" class="add-image margin-r-20" />
         <block wx:for='{{imageList}}' wx:key='*this'>
           <view bindtap='deleteImage' data-index='{{index}}' class="add-image image-box margin-r-20">
             <image mode="widthFix" src="/images/delete.png" class="delete-image" />
             <image mode="aspectFit" src="{{uploadUrl + item}}" class="add-image" />
           </view>
-        </block>
+        </block> -->
       </view>
     </view>
   </view>
@@ -199,7 +204,7 @@
     <view class="list-title">实际工作压力</view>
     <view class="list-content">
       <view class="absolute">
-        <input name='yaliset' focus="{{focus.yaliset}}" value='{{yaliset}}' class='list-input' type="text" placeholder='请输入实际工作压力【bar(g)】' placeholder-class="black-color" />
+        <input name='yaliset' focus="{{focus.yaliset}}" value='{{yaliset}}' class='list-input' type="text" placeholder='请输入实际工作压力（barg）' placeholder-class="black-color" />
       </view>
     </view>
   </view>
@@ -210,7 +215,7 @@
     </view>
     <view class="list-content">
       <view class="absolute">
-        <input name='detail' value='{{detail}}' class='list-input' type="text" placeholder='请输入运行压力波动情况【bar(g)】' placeholder-class="black-color" />
+        <input name='detail' value='{{detail}}' class='list-input' type="text" placeholder='请输入运行压力波动情况（barg）' placeholder-class="black-color" />
       </view>
     </view>
   </view>

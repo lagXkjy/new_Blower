@@ -1,24 +1,40 @@
 // pages/createCompressorInfo/createCompressorInfo.js
-const { $api, $interface } = wx
+const {
+  $api,
+  $interface
+} = wx
 const app = getApp()
 let skillStack = {}
 import brandStack from '../../utils/brandStack.js'
 Page({
   data: {
-    use:'',//按钮显示隐藏
+    use: '', //按钮显示隐藏
     ysjId: -1, //当前机器id
     uploadUrl: $interface.uploadUrl,
     start: '1970-01-01',
     end: '',
-    timeList: [[], []],
+    timeList: [
+      [],
+      []
+    ],
     timeIndex: [0, 0],
     Num: 1, //序号
     pressureType: 0, //业务类型
-    pressureList: [{ name: '低压', spec: '(<4barg)' },
-    { name: '中压', spec: '(2.5~16barg)' },
-    { name: '高压', spec: '(>16barg)' }],
+    pressureList: [{
+        name: '低压',
+        spec: '(<4barg)'
+      },
+      {
+        name: '中压',
+        spec: '(2.5~16barg)'
+      },
+      {
+        name: '高压',
+        spec: '(>16barg)'
+      }
+    ],
     Brand: '', //品牌
-    association:[],//品牌联想词,
+    association: [], //品牌联想词,
     brankIndex: -1,
     brandList: [],
     isBrandInput: false, //品牌是否显示输入框
@@ -31,8 +47,8 @@ Page({
     skillList: [],
     yasuoOther: '',
     kw: '', //电机功率
-    pow:0,
-    power: ['KW', 'HP'],//电机功率选择
+    pow: 0,
+    power: ['KW', 'HP'], //电机功率选择
     imageList: [], //图片列表
     imageMaxNum: 5, //图片最大数量
     controlModel: -1, //控制模式
@@ -49,9 +65,32 @@ Page({
     other: '', //其他
     otherList: ['三用一备', '有热备机'],
     focus: {},
+    image: [{
+        img: '/images/addImage.png',
+        text: '整机照片'
+      },
+      {
+        img: '/images/addImage.png',
+        text: '整机铭牌'
+      },
+      {
+        img: '/images/addImage.png',
+        text: '电机铭牌'
+      },
+      {
+        img: '/images/addImage.png',
+        text: '控制面板'
+      },
+      {
+        img: '/images/addImage.png',
+        text: '其他'
+      },
+    ]
   },
   changePressure(e) { //业务类型选择
-    const { pressureType } = this.data
+    const {
+      pressureType
+    } = this.data
     const index = e.currentTarget.dataset.index
     if (pressureType === index) return //选项没有变
     this.setData({
@@ -65,27 +104,44 @@ Page({
     this.getSkillData(this.handleBrand)
   },
   changeDate(e) { //出场日期
-    const { timeList } = this.data
+    const {
+      timeList
+    } = this.data
     const timeIndex = e.detail.value
     const CreateTime = `${timeList[0][timeIndex[0]]}-${timeList[1][timeIndex[1]]}`
-    this.setData({ CreateTime, timeIndex })
+    this.setData({
+      CreateTime,
+      timeIndex
+    })
   },
   changeCd(e) { //切换冷却状态
-    this.setData({ cd: e.currentTarget.dataset.index })
+    this.setData({
+      cd: e.currentTarget.dataset.index
+    })
   },
   //功率选择
-  power(e){
-    this.setData({ pow: e.currentTarget.dataset.index })
+  power(e) {
+    this.setData({
+      pow: e.currentTarget.dataset.index
+    })
   },
   changeSkill(e) { //切换压缩技术
-    this.setData({ skill: +e.detail.value, brandIndex: -1 })
+    this.setData({
+      skill: +e.detail.value,
+      brandIndex: -1
+    })
     this.handleBrand()
   },
   inputSkill(e) { //压缩技术输入框
     this.data.yasuoOther = e.detail.value
   },
   handleBrand() { //根据压缩技术，处理品牌 
-    let { skillList, skill, pressureType, Brand } = this.data
+    let {
+      skillList,
+      skill,
+      pressureType,
+      Brand
+    } = this.data
     let arr = brandStack[pressureType]
     let index = -1
     if (skillList[skill].ys) { //压缩技术没选其他
@@ -116,7 +172,10 @@ Page({
         isBrandInput = index === -1 ? true : false
       }
     }
-    this.setData({ isBrandInput, brandList })
+    this.setData({
+      isBrandInput,
+      brandList
+    })
   },
   // changeBrand(e) { //切换品牌,三级联动了都
   //   let { brandList, brandIndex } = this.data
@@ -138,7 +197,7 @@ Page({
     let value = e.detail.value
     // 品牌联想
     if (value != '') {
-      self.data.brandList.forEach(function (e) {
+      self.data.brandList.forEach(function(e) {
         if (e.indexOf(value) != -1) {
           let association = self.data.association
           association.push(e)
@@ -153,23 +212,46 @@ Page({
       })
     }
   },
-  association(e){//选择品牌
-    console.log(e.currentTarget.dataset.ation)
+  association(e) { //选择品牌
     this.setData({
       Brand: e.currentTarget.dataset.ation,
-      association:[]
+      association: []
     })
   },
-  addImage() { //选择添加图片
-    let { imageMaxNum, imageList } = this.data
-    $api.chooseImage(imageMaxNum - imageList.length)
+  // addImage(e) { //选择添加图片
+  //   let { imageMaxNum, imageList } = this.data
+  //   $api.chooseImage(imageMaxNum - imageList.length)
+  //     .then(res => {
+  //       $api.loading('上传中...')
+  //       return Promise.all(res.tempFilePaths.map(item => $api.uploadImage(item)))
+  //     })
+  //     .then(res => {
+  //       $api.hide()
+  //       this.setData({ imageList: imageList.concat(res.map(item => JSON.parse(item.data).Results)) })
+  //     })
+  //     .catch(() => {
+  //       $api.hide()
+  //       $api.showToast('上传失败')
+  //     })
+  // },
+  addImage(e) { //选择添加图片
+    let {
+      imageMaxNum,
+      imageList,
+      image
+    } = this.data
+    $api.chooseImage(1)
       .then(res => {
         $api.loading('上传中...')
         return Promise.all(res.tempFilePaths.map(item => $api.uploadImage(item)))
       })
       .then(res => {
         $api.hide()
-        this.setData({ imageList: imageList.concat(res.map(item => JSON.parse(item.data).Results)) })
+        image[e.currentTarget.dataset.index].img = JSON.parse(res[0].data).Results
+       
+        this.setData({
+          image
+        })
       })
       .catch(() => {
         $api.hide()
@@ -178,29 +260,59 @@ Page({
   },
   deleteImage(e) { //删除图片
     const index = e.currentTarget.dataset.index
-    let { imageList, ysjId } = this.data
+    let {
+      imageList,
+      ysjId
+    } = this.data
     // ysjId <= 0 && $api.deleteImage(`${imageList[index]}`) //修改和复制后添加，只能假删，不管了
     imageList.splice(index, 1)
-    this.setData({ imageList })
+    this.setData({
+      imageList
+    })
   },
   changeControlModel(e) { //控制模式
-    this.setData({ controlModel: +e.detail.value })
+    this.setData({
+      controlModel: +e.detail.value
+    })
   },
   changeStatus(e) { //切换及时状态
-    this.setData({ status: +e.detail.value })
+    this.setData({
+      status: +e.detail.value
+    })
   },
   changeOther(e) { //切换其他
-    this.setData({ other: +e.detail.value })
+    this.setData({
+      other: +e.detail.value
+    })
   },
   submit(e) {
     let data = e.detail.value
-    let { skill, skillList, yasuoOther, ysjId } = this.data
+    let {
+      skill,
+      skillList,
+      yasuoOther,
+      ysjId
+    } = this.data
     if (skill === -1) return this.toast('压缩技术')
     let ys = skillList[skill].ys
     if (ys === 0 && yasuoOther.trim().length <= 0) return this.toast('压缩技术')
-    let { Brand, zfId, Num, pressureType, CreateTime, cd, pow, imageList, controlModel,
-      controlModelList, status, statusList, other, otherList } = this.data
-    data.Brand = Brand
+    let {
+      Brand,
+      zfId,
+      Num,
+      pressureType,
+      CreateTime,
+      cd,
+      pow,
+      imageList,
+      controlModel,
+      controlModelList,
+      status,
+      statusList,
+      other,
+      otherList,
+      image
+    } = this.data
     data.zfId = zfId
     data.Num = Num
     data.Type = pressureType + 1
@@ -209,7 +321,13 @@ Page({
     data.YsjPowerUnit = +pow
     data.ys = ys
     data.yasuoOther = yasuoOther
-    data.Img = imageList.map(item => `${item}`).join('|')
+    data.Img = JSON.stringify({
+      "ZjZp": image[0].img != '/images/addImage.png' ? image[0].img : '',
+      "ZjMp": image[1].img != '/images/addImage.png' ? image[1].img : '',
+      "DjMp": image[2].img != '/images/addImage.png' ? image[2].img : '',
+      "KzMb": image[3].img != '/images/addImage.png' ? image[3].img : '',
+      "Qt": image[4].img != '/images/addImage.png' ? image[4].img : ''
+    })
     data.mode = controlModelList[controlModel] || ''
     data.state = statusList[status] || ''
     data.other = other || ''
@@ -219,7 +337,9 @@ Page({
     $api.request(ysjId > 0 ? $interface.UpdateYsj : $interface.addYsj, data)
       .then(res => {
         $api.hide()
-        if (res.data.res) wx.navigateBack({ detail: 1 })
+        if (res.data.res) wx.navigateBack({
+          detail: 1
+        })
       })
       .catch(() => {
         $api.hide()
@@ -229,59 +349,84 @@ Page({
   toast(str) {
     $api.showToast(`请完善${str}`)
   },
-  getFocus(key){ //使其主动获得焦点
-    let { focus } = this.data
-    if(!focus[key]) focus[key] = false
+  getFocus(key) { //使其主动获得焦点
+    let {
+      focus
+    } = this.data
+    if (!focus[key]) focus[key] = false
     let keys = `focus.${key}`
-    this.setData({ [keys]: true })
+    this.setData({
+      [keys]: true
+    })
   },
   judgeInfoIsPrefect(data) { //判断所填信息是否完善
     let t = $api.trim(data)
     const checkYS = (data) => { //“排气量”压缩技术为离心机时，非必填项; 返回  true为匹配成功
-      const { skillList } = this.data
+      const {
+        skillList
+      } = this.data
       return !skillList.every((item) => {
         return item.ys === data.ys ? (item.TypeName !== '离心机') : true
       })
     }
     switch (false) {
-      case t('Brand'): return this.toast('品牌')
-      // case t('Price'): return this.toast('价格')
-      case t('Number'): return (this.getFocus('Number'), this.toast('型号'))
-      case t('kw'): return (this.getFocus('kw'), this.toast('电机功率'))
-      case t('Img'): return this.toast('拍照')
-      // case t('mode'): return this.toast('控制模式')
-      // case t('RunTime'): return this.toast('运行时间')
-      // case t('LoadTime'): return this.toast('加载时间')
-      case t('yali'): return (this.getFocus('yali'), this.toast('铭牌额定压力'))
-      case checkYS(data) || t('paiqiliang'): return (this.getFocus('paiqiliang'), this.toast('排气量'))
-      case t('yaliset'): return (this.getFocus('yaliset'), this.toast('实际工作压力'))
-      // case t('detail'): return this.toast('运行压力')
-      case t('state'): return this.toast('即时状态')
-      // case t('info'): return this.toast('报警信息')
-      // case t('other'): return this.toast('其他信息')
-      default: return true
+      case t('Brand'):
+        return (this.getFocus('Brand'),this.toast('品牌'))
+        // case t('Price'): return this.toast('价格')
+      case t('Number'):
+        return (this.getFocus('Number'), this.toast('型号'))
+      case t('kw'):
+        return (this.getFocus('kw'), this.toast('电机功率'))
+        // case t('Img'): return this.toast('拍照')
+        // case t('mode'): return this.toast('控制模式')
+        // case t('RunTime'): return this.toast('运行时间')
+        // case t('LoadTime'): return this.toast('加载时间')
+      case t('yali'):
+        return (this.getFocus('yali'), this.toast('铭牌额定压力'))
+      case checkYS(data) || t('paiqiliang'):
+        return (this.getFocus('paiqiliang'), this.toast('排气量'))
+      case t('yaliset'):
+        return (this.getFocus('yaliset'), this.toast('实际工作压力'))
+        // case t('detail'): return this.toast('运行压力')
+      case t('state'):
+        return this.toast('即时状态')
+        // case t('info'): return this.toast('报警信息')
+        // case t('other'): return this.toast('其他信息')
+      default:
+        return true
     }
     // if (t('Brand') && t('Price') && t('Number') && t('kw') && t('Img') && t('mode')
     //   && t('RunTime') && t('LoadTime') && t('yali') && t('paiqiliang') && t('yaliset')
     //   && t('detail') && t('state') && t('info') && t('other')) return true
     // $api.showToast('请完善信息')
   },
-  getSkillData(ys, callback = () => { }) { //获取压缩技术
-    let { pressureType } = this.data
+  getSkillData(ys, callback = () => {}) { //获取压缩技术
+    let {
+      pressureType
+    } = this.data
     //有缓存走缓存 没缓存请求
     if (skillStack[pressureType]) {
-      this.setData({ skillList: skillStack[pressureType] })
+      this.setData({
+        skillList: skillStack[pressureType]
+      })
       if (ys) this.changeReviseSkill(ys, callback)
       return
     }
     $api.loading()
-    $api.request($interface.Ysjishu, { Type: pressureType + 1 }) //type 1 低压 2 中压 3 高压
+    $api.request($interface.Ysjishu, {
+        Type: pressureType + 1
+      }) //type 1 低压 2 中压 3 高压
       .then(res => {
         $api.hide()
         let arr = res.data.list
-        arr.push({ TypeName: '其他', ys: 0 })
+        arr.push({
+          TypeName: '其他',
+          ys: 0
+        })
         skillStack[pressureType] = arr
-        this.setData({ skillList: arr })
+        this.setData({
+          skillList: arr
+        })
         if (ys) this.changeReviseSkill(ys, callback)
       })
       .catch(() => {
@@ -290,7 +435,9 @@ Page({
       })
   },
   changeReviseSkill(ys, callback) {
-    const { skillList } = this.data
+    const {
+      skillList
+    } = this.data
     let index = -1
     for (let i = 0, len = skillList.length; i < len; i++) {
       if (skillList[i].ys === +ys) {
@@ -298,12 +445,16 @@ Page({
         break
       }
     }
-    this.setData({ skill: index })
+    this.setData({
+      skill: index
+    })
     callback()
   },
   getThisInfo() { //修改-获取当前信息
     $api.loading()
-    $api.request($interface.ysjinfo, { ysjId: this.data.ysjId })
+    $api.request($interface.ysjinfo, {
+        ysjId: this.data.ysjId
+      })
       .then(res => {
         $api.hide()
         this.viewData(res.data.data)
@@ -314,17 +465,32 @@ Page({
       })
   },
   eachTime(y, m) { //遍历出场日期并复制当前下标
-    const { timeList } = this.data
+    const {
+      timeList
+    } = this.data
     let yIndex = 0
     let mIndex = 0
-    for (let i = 0, len = timeList[0].length; i < len; i++) if (+timeList[0][i] === +y) { yIndex = i; break }
-    for (let i = 0, len = timeList[1].length; i < len; i++) if (+timeList[1][i] === +m) { mIndex = i; break }
-    this.setData({ timeIndex: [yIndex, mIndex] })
+    for (let i = 0, len = timeList[0].length; i < len; i++)
+      if (+timeList[0][i] === +y) {
+        yIndex = i;
+        break
+      }
+    for (let i = 0, len = timeList[1].length; i < len; i++)
+      if (+timeList[1][i] === +m) {
+        mIndex = i;
+        break
+      }
+    this.setData({
+      timeIndex: [yIndex, mIndex]
+    })
   },
   viewData(data) { //渲染数据于页面
     if (data.CreateTime) {
       const o = $api.timeStamp(data.CreateTime)
-      const { y, m } = o
+      const {
+        y,
+        m
+      } = o
       data.CreateTime = `${y}-${m}`
       this.eachTime(y, m)
     }
@@ -332,7 +498,27 @@ Page({
     data.Brand = data.Brand === void 0 ? '' : data.Brand
     data.cd = data.LqType ? +data.LqType : 0
     data.pow = data.YsjPowerUnit ? +data.YsjPowerUnit : 0
-    data.imageList = data.Img ? data.Img.split('|') : []
+    data.image = data.Img != null && data.Img != '' ? [{
+      img: JSON.parse(data.Img).ZjZp == '' ? '/images/addImage.png' :  JSON.parse(data.Img).ZjZp,
+      text: '整机照片'
+    },
+    {
+      img: JSON.parse(data.Img).ZjMp == '' ? '/images/addImage.png' :  JSON.parse(data.Img).ZjMp,
+      text: '整机铭牌'
+    },
+    {
+      img: JSON.parse(data.Img).DjMp == '' ? '/images/addImage.png' : JSON.parse(data.Img).DjMp,
+      text: '电机铭牌'
+    },
+    {
+      img: JSON.parse(data.Img).KzMb == '' ? '/images/addImage.png' : JSON.parse(data.Img).KzMb,
+      text: '控制面板'
+    },
+    {
+      img: JSON.parse(data.Img).Qt == '' ? '/images/addImage.png' : JSON.parse(data.Img).Qt,
+      text: '其他'
+    },
+    ] : this.data.image
     data.controlModel = this.getPickerIndex(data.mode, 'controlModelList')
     data.status = this.getPickerIndex(data.state, 'statusList')
     // let other = this.getPickerIndex(data.other, 'otherList')
@@ -364,9 +550,14 @@ Page({
     let yIndex = 0
     let mIndex = 0
     for (let i = 1970; i < endYear; i++) yList.push(`${i}`)
-    for (let i = 0, len = yList.length; i < len; i++) if (currentYear === +yList[i]) yIndex = i
-    for (let i = 0, len = mList.length; i < len; i++) if (currentMonth === +mList[i]) mIndex = i
-    this.setData({ timeList: [yList, mList], timeIndex: [yIndex, mIndex] })
+    for (let i = 0, len = yList.length; i < len; i++)
+      if (currentYear === +yList[i]) yIndex = i
+    for (let i = 0, len = mList.length; i < len; i++)
+      if (currentMonth === +mList[i]) mIndex = i
+    this.setData({
+      timeList: [yList, mList],
+      timeIndex: [yIndex, mIndex]
+    })
     // const currentDate = new Date().getTime()
     // this.setData({
     //   end: this.reverseTime(currentDate + 31536000000),
@@ -377,14 +568,16 @@ Page({
     let obj = $api.timeStamp(time)
     return `${obj.y}-${obj.m}-${obj.d}`
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.data.ysjId = +options.ysjId || 0 //0 添加 >0 修改 -1进入页面请求出错，页面就不显示了省得后面操作尴尬
     this.setData({
       use: +options.use
     })
   },
-  onReady: function () {
-    const { ysjId } = this.data
+  onReady: function() {
+    const {
+      ysjId
+    } = this.data
     this.initTime()
     //修改
     if (ysjId) return this.getThisInfo()
@@ -397,42 +590,42 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
     // return $api.share()
   }
 })

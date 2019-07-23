@@ -164,7 +164,7 @@ Page({
       case t('ContactTell'): return (this.getFocus('ContactTell'), this.toast('联系电话'))
       case $interface.phoneReg.test(data.ContactTell): return (this.getFocus('ContactTell'), $api.showToast('手机号不正确'), false)
       case t('yygy'): return (this.getFocus('yygy'), this.toast('应用工艺'))
-      case t('wdyq'): return (this.getFocus('wdyq'), this.toast('用气终端温度要求'))
+      // case t('wdyq'): return (this.getFocus('wdyq'), this.toast('用气终端温度要求'))
       default: return true
     }
     // if (t('ComPany') && t('Address') && t('Contact') && t('ContactTell') && t('yygy') && t('wdyq')) return true

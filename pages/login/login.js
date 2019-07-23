@@ -29,8 +29,8 @@ Page({
       .catch($api.hide)
   },
   onLoad: function (options) {
-    $api.getOpenId()
-      .then(() => { if (wx.getStorageSync('isLogin')) this.toInfoList() })
+    // $api.getOpenId()
+    //   .then(() => { if (wx.getStorageSync('isLogin')) this.toInfoList() })
   },
   onReady: function () { },
 

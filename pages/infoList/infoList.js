@@ -6,6 +6,7 @@ const {
 const app = getApp()
 Page({
   data: {
+    BlowerExce: $interface.BlowerExce,
     page: 1,
     PageSize: 10,
     start: '', //默认今天之前的一个月
@@ -15,6 +16,35 @@ Page({
     listData: [],
     flag: true, //获取列表避免重复请求
     search: ''
+  },
+  download(e) { //下载按钮
+    let zfid = e.currentTarget.dataset.zfid
+    $api.loading()
+    $api.request($interface.GetExcelFileStr, {
+        ZfId: zfid
+      }).then(res => {
+        $api.hide()
+        if (res.data.res) {
+          wx.downloadFile({
+            url: this.data.BlowerExce + res.data.filename,
+            success(res) {
+              console.log(res)
+              if (res.statusCode === 200) {
+                wx.openDocument({
+                  filePath: res.tempFilePath,
+                  success: function(res) {
+
+                  }
+                })
+              }
+            }
+          })
+        } else {
+          $api.showToast('失败')
+        }
+        wx.stopPullDownRefresh()
+      })
+      .catch(() => this.data.flag = true && $api.hide)
   },
   input(e) {
     this.data.search = e.detail.value
@@ -91,7 +121,7 @@ Page({
           listData: $api.unique(listData, 'zfId')
         })
         this.data.page++
-        wx.stopPullDownRefresh()
+          wx.stopPullDownRefresh()
       })
       .catch(() => this.data.flag = true && $api.hide)
   },
@@ -124,10 +154,15 @@ Page({
       url: '/pages/login/login'
     })
   },
+  GetIsRegister() {
+    $api.request($interface.GetIsRegister, {
+      openid: wx.getStorageSync('openid'),
+    }).then(res => {
+      if (!res.data.res) this.toInfoList()
+    })
+  },
   onLoad: function(options) {
     $api.getOpenId().then(() => {
-      if (!wx.getStorageSync('isLogin')) this.toInfoList()
-    }).then(res => {
       this.initTime()
     })
   },
@@ -139,7 +174,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.data.page=1;
+    this.data.page = 1;
     this.backShow()
   },
 
@@ -160,7 +195,7 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     this.data.page = 1;
     this.getList()
   },
