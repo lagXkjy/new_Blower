@@ -89,6 +89,11 @@ Page({
   judgeTime(start, end) { //判断结束时间是否大于开始时间
     return $api.newDate(`${end} 00:00:00`).getTime() - $api.newDate(`${start} 00:00:00`).getTime() > 0
   },
+  getListsearch(){//搜索
+    this.data.listData=[];
+    this.data.page=1;
+    this.getList()
+  },
   getList() {
     let {
       start,
@@ -162,9 +167,8 @@ Page({
     })
   },
   onLoad: function(options) {
-    $api.getOpenId().then(() => {
-      this.initTime()
-    })
+    // $api.getOpenId().then((res) => {
+    // })
   },
   onReady: function() {
 
@@ -175,7 +179,10 @@ Page({
    */
   onShow: function() {
     this.data.page = 1;
-    this.backShow()
+    $api.getOpenId().then((res) => {
+      this.initTime()
+      this.backShow()
+    })
   },
 
   /**

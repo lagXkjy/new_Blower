@@ -15,7 +15,7 @@
         </picker>
         <input bindinput='input' class="input font-26 border-1 margin-l-10 border-box padding-lr-10" type="text" placeholder="输入关键字" placeholder-style="color: #787878;"/>
     </view>
-    <view bindtap='getList' class='search theme-bg white-color font-26 flex justify-center align-center'>
+    <view bindtap='getListsearch' class='search theme-bg white-color font-26 flex justify-center align-center'>
         搜索
     </view>
 </view>

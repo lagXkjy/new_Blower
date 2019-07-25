@@ -96,7 +96,7 @@ Page({
     data.img = imageList.map(item => `${item}`).join('|')
     data.zfId = zfId
     data.Controller = Controller
-    data.ZfProvince=this.data.address_component.district,
+    data.ZfProvince = this.data.address_component.province,
       data.ZfCity=this.data.address_component.city,
     $api.loading('提交中...')
     // zfId //有id修改，无id添加
